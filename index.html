@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atharv Holkar | Aspiring Software Developer</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#020617',
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            accent: '#06b6d4',
+                            accentHover: '#0891b2',
+                            border: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Interactive Background Matrix Particle Canvas Canvas Positioning */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .premium-glow {
+            box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.15);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .premium-glow:hover {
+            box-shadow: 0 0 50px -5px rgba(6, 182, 212, 0.35);
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .accent-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            background-size: 200% 200%;
+            animation: gradient-shift 4s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Matrix Glitch Animation Pattern */
+        @keyframes matrix-glitch {
+            0% { clip-path: inset(40% 0 61% 0); transform: skew(0.3deg); }
+            20% { clip-path: inset(92% 0 1% 0); transform: skew(-0.5deg); }
+            40% { clip-path: inset(15% 0 80% 0); transform: skew(0.5deg); }
+            60% { clip-path: inset(80% 0 5% 0); transform: skew(-0.3deg); }
+            80% { clip-path: inset(3% 0 92% 0); transform: skew(0.8deg); }
+            100% { clip-path: inset(40% 0 61% 0); transform: skew(0deg); }
+        }
+        .glitch-effect:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -2px 0 #06b6d4, 2px 0 #ef4444;
+            top: 0;
+            color: #fff;
+            background: rgba(30, 41, 59, 0.9);
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0); 
+            animation: matrix-glitch 1s infinite linear alternate-reverse;
+        }
+
+        /* Kinetic Magnetic Button Mechanics */
+        .magnetic-btn {
+            position: relative;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+            transform: translate(var(--mx, 0px), var(--my, 0px));
+        }
+
+        /* CRT Terminal Scanlines Layer Effect */
+        .crt-monitor::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Custom Interactive Pulse Elements */
+        .terminal-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .terminal-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out;
+        }
+        .terminal-btn:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="bg-brand-black text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- Interactive Background Particles Matrix -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- ================= PREMIUM SYSTEM LOADER (SERVER HACK RESOLUTION) ================= -->
+    <div id="system-loader" class="fixed inset-0 bg-black z-50 flex flex-col justify-center items-center p-4 md:p-8 font-mono overflow-hidden crt-monitor">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(6,182,212,0.07)_0%,transparent_70%)]"></div>
+        
+        <div class="max-w-3xl w-full flex flex-col h-[500px] border border-cyan-900/40 bg-slate-950/90 backdrop-blur-xl rounded-2xl shadow-2xl relative z-10 shadow-cyan-500/10">
+            <!-- Terminal Header -->
+            <div class="flex items-center justify-between px-5 py-4 bg-slate-900 border-b border-slate-800 rounded-t-2xl">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500/80 animate-pulse"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                    <span class="text-slate-500 text-xs font-medium pl-2">security-subsystem://node-cluster</span>
+                </div>
+                <div class="text-red-500 text-[10px] tracking-widest uppercase font-bold animate-pulse flex items-center gap-1.5">
+                    <i class="fas fa-triangle-exclamation"></i> Breach Detected
+                </div>
+            </div>
+            
+            <!-- Terminal Core Log Stream -->
+            <div id="log-stream" class="flex-1 overflow-y-auto p-6 space-y-2 text-xs md:text-sm tracking-wide text-slate-400">
+                <!-- System Events Dynamically Appended -->
+            </div>
+            
+            <!-- Terminal Input Controller -->
+            <div class="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center text-cyan-400 text-xs md:text-sm rounded-b-2xl">
+                <span class="mr-2 font-bold flex items-center gap-1">
+                    <i class="fas fa-terminal text-[10px] text-slate-600"></i> admin@atharv:~$
+                </span>
+                <span id="system-input-buffer" class="text-white font-semibold tracking-wider"></span>
+                <span class="w-2 h-4 bg-cyan-400 ml-1 animate-pulse"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PREMIUM APPLICATION CONTENT CONTAINER ================= -->
+    <div id="app-canvas" class="opacity-0 transition-all duration-1000 transform translate-y-4 hidden relative z-10">
+        
+        <!-- Premium Navigation Matrix Bar -->
+        <nav class="sticky top-0 bg-brand-black/70 backdrop-blur-xl border-b border-brand-border/60 z-40 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <a href="#" class="text-lg font-bold font-mono tracking-tighter text-white group flex items-center gap-2">
+                    <span class="text-brand-accent group-hover:translate-x-[-2px] transition-transform">&lt;</span>
+                    ATHARV HOLKAR
+                    <span class="text-brand-accent group-hover:translate-x-[2px] transition-transform">/&gt;</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+                    <a href="#about" class="hover:text-cyan-400 transition-all duration-300 relative group py-1">
+                        Profile
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#experience" class="hover:text-cyan-400 transition-all duration-300 relative group py-1">
+                        Experience
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#projects" class="hover:text-cyan-400 transition-all duration-300 relative group py-1">
+                        Projects
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#ama-terminal" class="hover:text-cyan-400 transition-all duration-300 relative group py-1">
+                        AMA Terminal
+                        <span class="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                <div>
+                    <a href="#ama-terminal" class="magnetic-btn hidden md:inline-flex items-center justify-center px-6 py-2.5 border border-brand-accent/40 rounded-full text-xs font-mono font-medium text-brand-accent bg-brand-accent/5 hover:bg-brand-accent hover:text-black hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] tracking-wide transition-all duration-300">
+                        Query Mainframe
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Premium Hero & Interactive Technical Summary Section -->
+        <section id="about" class="max-w-7xl mx-auto px-6 pt-24 pb-20 md:py-36 flex flex-col lg:flex-row items-center justify-between gap-16 relative">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(6,182,212,0.08)_0%,transparent_50%)] pointer-events-none"></div>
+            
+            <div class="space-y-8 max-w-3xl z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs font-mono font-medium shadow-sm">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    SYSTEM NODE CLEARANCE: SECURED BY ADMIN ATHARV
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+                    Aspiring <br class="hidden sm:inline">
+                    <span class="text-gradient font-sans">Software Developer.</span>
+                </h1>
+                
+                <p class="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl font-light">
+                    I am a Computer Science Engineering student focused on building optimized web architectures, resolving scalable algorithmic pipelines, and constructing high-performance technological systems.
+                </p>
+
+                <!-- Premium CTA Dynamic Button Blocks -->
+                <div class="flex flex-wrap items-center gap-5 pt-4">
+                    <a href="#projects" class="magnetic-btn group inline-flex items-center gap-3 px-7 py-4 accent-gradient rounded-xl text-sm font-semibold text-black hover:shadow-[0_0_30px_rgba(6,182,212,0.35)] transition-all duration-300 tracking-wide">
+                        Explore Deployments 
+                        <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#ama-terminal" class="magnetic-btn group inline-flex items-center gap-3 px-7 py-4 bg-brand-card hover:bg-slate-700/50 border border-brand-border hover:border-cyan-500/40 rounded-xl text-sm font-semibold text-slate-300 hover:text-white transition-all duration-300 shadow-md">
+                        Launch System AMA 
+                        <i class="fas fa-terminal text-xs text-brand-accent group-hover:scale-110 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Identity Verification Quick Matrix Links -->
+                <div class="flex items-center gap-4 pt-6 text-slate-500">
+                    <span class="text-xs font-mono tracking-widest uppercase text-slate-600">Identity Gateways //</span>
+                    <a href="https://github.com/Atharv-mu" target="_blank" class="magnetic-btn hover:text-brand-accent transition-colors duration-300 text-xl p-2"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/atharvholkar/" target="_blank" class="magnetic-btn hover:text-brand-accent transition-colors duration-300 text-xl p-2"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <!-- Graphic Structural Visualizer Panel -->
+            <div class="w-full lg:max-w-md bg-gradient-to-b from-slate-900 to-brand-black border border-brand-border rounded-2xl p-6 font-mono text-xs shadow-2xl relative group premium-glow z-10">
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-all duration-700"></div>
+                <div class="flex items-center justify-between border-b border-brand-border pb-4 mb-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-700"></span>
+                        <span class="text-slate-500 text-[10px] pl-2 tracking-tight">runtime_manifest.json</span>
+                    </div>
+                    <i class="fas fa-shield-alt text-emerald-500/70 text-sm animate-pulse"></i>
+                </div>
+                <pre class="text-cyan-400/90 leading-relaxed overflow-x-auto"><span class="text-pink-500">const</span> <span class="text-blue-400">identity</span> = {
+  operator: <span class="text-amber-300">"Atharv Holkar"</span>,
+  focus: <span class="text-amber-300">"Aspiring Software Developer"</span>,
+  university: <span class="text-amber-300">"Medi-Caps University"</span>,
+  stack: [
+    <span class="text-emerald-400">"MongoDB"</span>, <span class="text-emerald-400">"Express"</span>,
+    <span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"Node"</span>
+  ],
+  securityClearance: <span class="text-emerald-400">"ADMIN_VERIFIED"</span>
+};
+
+IntrusionMatrixPurged(true);</pre>
+            </div>
+        </section>
+
+        <!-- Professional Timeline Grid -->
+        <section id="experience" class="max-w-7xl mx-auto px-6 py-24 border-t border-brand-border/40">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div>
+                    <div class="sticky top-28 space-y-4">
+                        <span class="text-brand-accent font-mono text-xs tracking-widest uppercase">ARCHIVE METRICS</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Professional Timeline</h2>
+                        <p class="text-slate-400 font-light leading-relaxed max-w-sm">
+                            A systematically verified trajectory tracking deployed systems internships and development milestones.
+                        </p>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 space-y-8 relative before:absolute before:inset-y-0 before:left-4 md:before:left-6 before:w-[1px] before:bg-brand-border">
+                    
+                    <!-- Item 1 -->
+                    <div class="relative pl-12 md:pl-16 group">
+                        <div class="absolute left-2 md:left-4 top-2 w-4 h-4 bg-brand-black border-2 border-brand-accent rounded-full group-hover:bg-cyan-400 transition-all duration-300 z-10 shadow-md shadow-cyan-500/30"></div>
+                        <div class="bg-brand-card border border-brand-border/60 p-6 rounded-2xl premium-glow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white transition-colors duration-300 group-hover:text-brand-accent glitch-effect" data-text="Operations Executive">Operations Executive</h3>
+                                    <p class="text-slate-400 text-sm">E-GyaanShala <span class="text-slate-500 font-mono text-xs pl-2">· Full-time</span></p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 self-start">Jul 2026 - Present</span>
+                            </div>
+                            <p class="text-slate-400 text-sm font-light leading-relaxed">Managing day to day task for the company.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative pl-12 md:pl-16 group">
+                        <div class="absolute left-2 md:left-4 top-2 w-4 h-4 bg-brand-black border-2 border-brand-accent rounded-full group-hover:bg-cyan-400 transition-all duration-300 z-10 shadow-md shadow-cyan-500/30"></div>
+                        <div class="bg-brand-card border border-brand-border/60 p-6 rounded-2xl premium-glow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white transition-colors duration-300 group-hover:text-brand-accent glitch-effect" data-text="Intern">Intern</h3>
+                                    <p class="text-slate-400 text-sm">Positiveway Solutions Pvt Ltd <span class="text-slate-500 font-mono text-xs pl-2">· Internship</span></p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 self-start">Jun 2026 - Jul 2026</span>
+                            </div>
+                            <p class="text-slate-400 text-sm font-light leading-relaxed">Worked in the major projects like lead finders in which we find the leads of all the near by city and states.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative pl-12 md:pl-16 group">
+                        <div class="absolute left-2 md:left-4 top-2 w-4 h-4 bg-brand-black border-2 border-brand-accent rounded-full group-hover:bg-cyan-400 transition-all duration-300 z-10 shadow-md shadow-cyan-500/30"></div>
+                        <div class="bg-brand-card border border-brand-border/60 p-6 rounded-2xl premium-glow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white transition-colors duration-300 group-hover:text-brand-accent glitch-effect" data-text="Founder & Designer">Founder</h3>
+                                    <p class="text-slate-400 text-sm">Athinyx <span class="text-slate-500 font-mono text-xs pl-2">· Enterprise Evolution</span></p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 self-start">Jan 2026 - Feb 2026</span>
+                            </div>
+                            <p class="text-slate-400 text-sm font-light leading-relaxed">Led visual asset styling, strategic corporate architecture layouts, and premium graphic design integration across the firm branding stack.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="relative pl-12 md:pl-16 group">
+                        <div class="absolute left-2 md:left-4 top-2 w-4 h-4 bg-brand-black border-2 border-brand-accent rounded-full group-hover:bg-cyan-400 transition-all duration-300 z-10 shadow-md shadow-cyan-500/30"></div>
+                        <div class="bg-brand-card border border-brand-border/60 p-6 rounded-2xl premium-glow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white transition-colors duration-300 group-hover:text-brand-accent glitch-effect" data-text="Crowd Funding Intern">Crowd Funding Intern</h3>
+                                    <p class="text-slate-400 text-sm">Muskurahat Foundation <span class="text-slate-500 font-mono text-xs pl-2">· Crowd Funding</span></p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 self-start">Dec 2025</span>
+                            </div>
+                            <p class="text-slate-400 text-sm font-light leading-relaxed">Worked as an crowd funding intern at Muskurahat Foundation.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="relative pl-12 md:pl-16 group">
+                        <div class="absolute left-2 md:left-4 top-2 w-4 h-4 bg-brand-black border-2 border-brand-accent rounded-full group-hover:bg-cyan-400 transition-all duration-300 z-10 shadow-md shadow-cyan-500/30"></div>
+                        <div class="bg-brand-card border border-brand-border/60 p-6 rounded-2xl premium-glow">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white transition-colors duration-300 group-hover:text-brand-accent glitch-effect" data-text="Trainee Node">Trainee</h3>
+                                    <p class="text-slate-400 text-sm">Acmegrade <span class="text-slate-500 font-mono text-xs pl-2">· Cloud Track</span></p>
+                                </div>
+                                <span class="inline-block px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-400 self-start">Aug 2025 - Sep 2025</span>
+                            </div>
+                            <p class="text-slate-400 text-sm font-light leading-relaxed">Completed comprehensive project builds exploring responsive framework models and dynamic request handling components.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium Project Grid Layout Component -->
+        <section id="projects" class="max-w-7xl mx-auto px-6 py-24 border-t border-brand-border/40">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-16">
+                <div class="space-y-2">
+                    <span class="text-brand-accent font-mono text-xs tracking-widest uppercase">DEPLOYED INSTANCES</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight">System Deployments</h2>
+                </div>
+                <p class="text-slate-400 font-light max-w-md text-sm leading-relaxed">
+                    Live production clusters and platforms actively configured. Trigger terminal routes to open production addresses.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Project Card 1 -->
+                <div class="bg-gradient-to-br from-slate-900 to-brand-black border border-brand-border rounded-2xl p-6 flex flex-col justify-between group relative overflow-hidden premium-glow">
+                    <div>
+                        <div class="flex justify-between items-center text-slate-500 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-brand-accent border border-slate-800 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-cubes text-lg"></i>
+                            </div>
+                            <a href="https://nirvanova1.netlify.app/" target="_blank" class="magnetic-btn w-9 h-9 rounded-full bg-slate-950 hover:bg-cyan-500 border border-slate-800 hover:border-cyan-400 text-slate-400 hover:text-black flex items-center justify-center text-xs transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-brand-accent transition-colors duration-300 glitch-effect" data-text="Nirvanova">Nirvanova</h3>
+                        <p class="text-slate-400 text-sm font-light leading-relaxed mb-6">High-speed modular layout interface built to maximize framework deployment optimization benchmarks.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-slate-400 border-t border-brand-border/40 pt-4">
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">HTML5</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">CSS3</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">JavaScript</span>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-gradient-to-br from-slate-900 to-brand-black border border-brand-border rounded-2xl p-6 flex flex-col justify-between group relative overflow-hidden premium-glow">
+                    <div>
+                        <div class="flex justify-between items-center text-slate-500 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-brand-accent border border-slate-800 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-search-dollar text-lg"></i>
+                            </div>
+                            <a href="https://teraquerry-production.up.railway.app/" target="_blank" class="magnetic-btn w-9 h-9 rounded-full bg-slate-950 hover:bg-cyan-500 border border-slate-800 hover:border-cyan-400 text-slate-400 hover:text-black flex items-center justify-center text-xs transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-brand-accent transition-colors duration-300 glitch-effect" data-text="Teraquerry">Teraquerry</h3>
+                        <p class="text-slate-400 text-sm font-light leading-relaxed mb-6">Backend platform cluster processing system metrics and operations including Lead Finder models.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-slate-400 border-t border-brand-border/40 pt-4">
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">Node.js</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">Express</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">Railway</span>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="bg-gradient-to-br from-slate-900 to-brand-black border border-brand-border rounded-2xl p-6 flex flex-col justify-between group relative overflow-hidden premium-glow">
+                    <div>
+                        <div class="flex justify-between items-center text-slate-500 mb-8">
+                            <div class="w-10 h-10 rounded-xl bg-slate-950 flex items-center justify-center text-brand-accent border border-slate-800 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fas fa-shield text-lg"></i>
+                            </div>
+                            <a href="https://distraction-removal.onrender.com/" target="_blank" class="magnetic-btn w-9 h-9 rounded-full bg-slate-950 hover:bg-cyan-500 border border-slate-800 hover:border-cyan-400 text-slate-400 hover:text-black flex items-center justify-center text-xs transition-all duration-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-brand-accent transition-colors duration-300 glitch-effect" data-text="Distraction Removal">Distraction Removal</h3>
+                        <p class="text-slate-400 text-sm font-light leading-relaxed mb-6">Server-side tool developed to optimize core productivity pipelines and clean execution contexts.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-[11px] font-mono text-slate-400 border-t border-brand-border/40 pt-4">
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">MERN Stack</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">REST API</span>
+                        <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800">Render</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PREMIUM ASK ME ANYTHING INTERACTIVE TERMINAL ================= -->
+        <section id="ama-terminal" class="max-w-7xl mx-auto px-6 py-24 border-t border-brand-border/40">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-brand-accent font-mono text-xs tracking-widest uppercase">VIRTUALIZED APPLICATION MATRIX</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Ask Me Anything Terminal</h2>
+                    <p class="text-slate-400 font-light max-w-xl mx-auto text-sm">
+                        Query the platform diagnostic arrays directly. Trigger script nodes below to pull immediate server evaluations.
+                    </p>
+                </div>
+                
+                <div class="border border-brand-border/80 bg-slate-900 rounded-2xl p-4 shadow-2xl premium-glow flex flex-col h-[400px] relative overflow-hidden crt-monitor">
+                    <div class="flex items-center space-x-2 border-b border-brand-border pb-3 mb-4 text-xs font-mono text-slate-500 z-10">
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-800"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-800"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-zinc-800"></span>
+                        <span class="pl-2 flex items-center gap-1.5"><i class="fas fa-server text-[10px]"></i> proxy-environment v3.1.0-secure</span>
+                    </div>
+                    
+                    <div id="ama-screen" class="flex-1 overflow-y-auto font-mono text-xs md:text-sm p-4 bg-brand-black rounded-xl space-y-3 text-slate-300 z-10 selection:bg-cyan-500/40">
+                        <p class="text-zinc-600">[Initialization connection timestamp active]</p>
+                        <p class="text-cyan-400 font-semibold tracking-wide">*** STANDBY VERIFIED. CORE SYSTEM ROUTINES ONLINE BY OPERATOR ATHARV ***</p>
+                        <p class="text-zinc-400">Select an execution prompt block macro link below to review production attributes.</p>
+                    </div>
+                </div>
+
+                <!-- Macro Query Interactive Action Array -->
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <button onclick="queryAMA('stack')" class="terminal-btn px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-brand-border text-slate-300 hover:text-brand-accent rounded-xl text-xs font-mono font-medium shadow-sm transition-all duration-300 hover:border-cyan-500/50 hover:scale-105">
+                        get_tech_stack.sh
+                    </button>
+                    <button onclick="queryAMA('experience')" class="terminal-btn px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-brand-border text-slate-300 hover:text-brand-accent rounded-xl text-xs font-mono font-medium shadow-sm transition-all duration-300 hover:border-cyan-500/50 hover:scale-105">
+                        cat_internship_records.json
+                    </button>
+                    <button onclick="queryAMA('security')" class="terminal-btn px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-brand-border text-slate-300 hover:text-brand-accent rounded-xl text-xs font-mono font-medium shadow-sm transition-all duration-300 hover:border-cyan-500/50 hover:scale-105">
+                        check_security_logs.log
+                    </button>
+                    <button onclick="queryAMA('contact')" class="terminal-btn px-5 py-2.5 bg-brand-card hover:bg-slate-800 border border-brand-border text-slate-300 hover:text-brand-accent rounded-xl text-xs font-mono font-medium shadow-sm transition-all duration-300 hover:border-cyan-500/50 hover:scale-105">
+                        ping_operator.net
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Premium Footer Node -->
+        <footer class="bg-brand-black border-t border-brand-border/60 py-16 px-6 text-center text-xs text-slate-600 font-mono tracking-wide">
+            <div class="max-w-7xl mx-auto space-y-4">
+                <div class="flex justify-center items-center gap-6 text-slate-500 text-sm mb-4">
+                    <a href="https://github.com/Atharv-mu" target="_blank" class="magnetic-btn hover:text-brand-accent p-2"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/atharvholkar/" target="_blank" class="magnetic-btn hover:text-brand-accent p-2"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <p>&copy; 2026 ATHARV HOLKAR. ALL RIGHTS RESERVED BY OPERATOR.</p>
+                <p class="text-[10px] text-slate-700">CORE NODE ENVIRONMENT STATS: STATUS=200_OK // PIPELINE=VERIFIED</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ================= PREMIUM APPLICATION SCRIPT ENGINE ================= -->
+    <script>
+        // System Loader Simulation Configurations
+        const logStream = document.getElementById('log-stream');
+        const systemInputBuffer = document.getElementById('system-input-buffer');
+        const systemLoader = document.getElementById('system-loader');
+        const appCanvas = document.getElementById('app-canvas');
+        const amaScreen = document.getElementById('ama-screen');
+
+        const bootLogs = [
+            { text: "CRITICAL: SECURITY SUB-SYSTEM NODE COMPROMISED...", delay: 200, type: "error" },
+            { text: "INTRUSION DETECTION: External unauthorized packets intercepting active ports.", delay: 400, type: "error" },
+            { text: "Attempting automated routing isolate... [FAILED]", delay: 300, type: "error" },
+            { text: "INITIATING EMERGENCY ADMIN TERMINAL PROTOCOL BY OPERATOR...", delay: 500, type: "info" },
+            { text: "Establishing secure handshake with cluster proxy server...", delay: 300, type: "info" },
+            { text: "Injecting payload bypass parameters...", delay: 400, type: "info" },
+            { text: "Purging malicious server framework injection matrix strings...", delay: 600, type: "success" },
+            { text: "ENCRYPTING CLUSTER SUB-SETS // STATUS=SECURED", delay: 300, type: "success" },
+            { text: "Re-routing network traffic vectors back to secure admin gateway...", delay: 400, type: "info" },
+            { text: "SYSTEM RESTORE COMPLETE. DEPLOYING APPLICATION CANVAS...", delay: 500, type: "success" }
+        ];
+
+        const adminCommandText = "sh deploy_portfolio_mainframe.sh --force-bypass";
+
+        function appendLogLine(text, type) {
+            const p = document.createElement('p');
+            if (type === 'error') p.className = 'text-red-400 font-semibold animate-pulse';
+            else if (type === 'success') p.className = 'text-emerald-400 font-semibold';
+            else p.className = 'text-slate-400';
+            p.innerHTML = `<span class="text-slate-600 mr-2">[${new Date().toLocaleTimeString()}]</span> ${text}`;
+            logStream.appendChild(p);
+            logStream.scrollTop = logStream.scrollHeight;
+        }
+
+        function typeAdminInput(index = 0) {
+            if (index < adminCommandText.length) {
+                systemInputBuffer.textContent += adminCommandText.charAt(index);
+                setTimeout(() => typeAdminInput(index + 1), 40 + Math.random() * 40);
+            } else {
+                setTimeout(triggerCanvasUnlock, 600);
+            }
+        }
+
+        function runBootPipeline(logIndex = 0) {
+            if (logIndex < bootLogs.length) {
+                const currentLog = bootLogs[logIndex];
+                appendLogLine(currentLog.text, currentLog.type);
+                if (logIndex === 3) {
+                    setTimeout(() => typeAdminInput(), 400);
+                }
+                setTimeout(() => runBootPipeline(logIndex + 1), currentLog.delay);
+            }
+        }
+
+        function triggerCanvasUnlock() {
+            systemLoader.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            systemLoader.style.opacity = '0';
+            
+            setTimeout(() => {
+                systemLoader.style.display = 'none';
+                appCanvas.classList.remove('hidden');
+                void appCanvas.offsetWidth; 
+                appCanvas.classList.remove('translate-y-4');
+                appCanvas.classList.add('opacity-100');
+                initMatrixCanvas(); // Fire up canvas when screen reveals
+            }, 800);
+        }
+
+        // AMA Dynamic Terminal Command Router Engine
+        function queryAMA(routeKey) {
+            const cmdPrompt = document.createElement('p');
+            cmdPrompt.className = 'text-cyan-400 font-mono mt-4 pt-2 border-t border-brand-border/30';
+            cmdPrompt.innerHTML = `<span class="text-slate-600">admin@atharv:~$</span> ./run_diagnostics --key=${routeKey}`;
+            amaScreen.appendChild(cmdPrompt);
+
+            const responseBlock = document.createElement('p');
+            responseBlock.className = 'text-slate-300 font-mono pl-4 border-l-2 border-brand-accent/50 py-2 bg-slate-950/40 rounded opacity-0 transform translate-x-2 transition-all duration-300';
+
+            switch (routeKey) {
+                case 'stack':
+                    responseBlock.innerHTML = `<strong>[ENGAGING TECHNOLOGICAL SCHEMA DETECTED]</strong><br>
+                    • Full Stack Focus: MongoDB, Express.js, React, Node.js (MERN Cluster Architecture)<br>
+                    • Core Systems: HTML5, CSS3, JavaScript, Tailwind UI Core Framework Engine.`;
+                    break;
+                case 'experience':
+                    responseBlock.innerHTML = `<strong>[RETRIEVING INTERNSHIP LEDGER METRICS]</strong><br>
+                    • Operations Executive @ E-GyaanShala (Jul 2026 - Present)<br>
+                    • Software Engineer Intern @ Positiveway Solutions Pvt Ltd (Jun 2026 - Jul 2026)<br>
+                    • Founder & Branding Strategist @ Athinyx Enterprise Evolution (Jan 2026 - Feb 2026)<br>
+                    • Crowd Funding Intern @ Muskurahat Foundation Social Track (Dec 2025)<br>
+                    • Technical Framework Trainee Node @ Acmegrade Cloud Tracks (Aug 2025 - Sep 2025)`;
+                    break;
+                case 'security':
+                    responseBlock.innerHTML = `<strong>[EVALUATING ENVIRONMENT SECURITY STRUCT]</strong><br>
+                    • Security Level: ADMIN_VERIFIED SYSTEM NODE ACCESS PROXIES APPLIED<br>
+                    • Intrusion Mitigation Matrices Status: active_purged=true<br>
+                    • Diagnostic Summary: All production clusters (Nirvanova, Teraquerry, Distraction Engine) performing smoothly under standard computational parameters.`;
+                    break;
+                case 'contact':
+                    responseBlock.innerHTML = `<strong>[ESTABLISHING TARGETED HANDSHAKE ROUTE]</strong><br>
+                    • Primary Network Gateway: <a href="https://www.linkedin.com/in/atharvholkar/" target="_blank" class="text-brand-accent underline hover:text-cyan-300">linkedin.com/in/atharvholkar/</a><br>
+                    • Source Code Mainframe Gateway: <a href="https://github.com/Atharv-mu" target="_blank" class="text-brand-accent underline hover:text-cyan-300">github.com/Atharv-mu</a><br>
+                    • Terminal Note: Operator communication array vectors open for innovative deployment inquiries.`;
+                    break;
+                default:
+                    responseBlock.textContent = "CRITICAL ERROR: Selected execution pointer parameter vector is invalid.";
+            }
+
+            amaScreen.appendChild(responseBlock);
+            setTimeout(() => {
+                responseBlock.classList.remove('opacity-0', 'translate-x-2');
+            }, 50);
+            amaScreen.scrollTop = amaScreen.scrollHeight;
+        }
+
+        // --- NEW KINETIC & MOUSE GRAPHICS CONTROLLERS ---
+        
+        // Dynamic Kinetic Magnetic Attraction Script Node
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - (rect.left + rect.width / 2);
+                const y = e.clientY - (rect.top + rect.height / 2);
+                
+                // If cursor is within 70px proximity boundary vector
+                if (Math.sqrt(x*x + y*y) < 70) {
+                    btn.style.setProperty('--mx', `${x * 0.35}px`);
+                    btn.style.setProperty('--my', `${y * 0.35}px`);
+                } else {
+                    btn.style.setProperty('--mx', '0px');
+                    btn.style.setProperty('--my', '0px');
+                }
+            });
+        });
+
+        // Background Particle Matrix Engine
+        function initMatrixCanvas() {
+            const canvas = document.getElementById('matrix-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null };
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = (Math.random() - 0.5) * 0.4;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                    if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+                    // Proximity mapping to pointer vectors
+                    if (mouse.x && mouse.y) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+                        if (dist < 120) {
+                            this.x -= dx * 0.02;
+                            this.y -= dy * 0.02;
+                        }
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(6, 182, 212, 0.15)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 65; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            runBootPipeline();
+        });
+    </script>
+</body>
+</html>
+
