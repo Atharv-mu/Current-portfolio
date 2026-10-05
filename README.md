@@ -49,7 +49,7 @@ I'm a B.Tech Computer Science Engineering student at Medi-Caps University and an
 - Netlify Functions and the Anthropic API for the optional AI mode of the chat assistant
 - GitHub Pages for hosting
 
-**Technologies I work with and am learning**
+**Technologies I work with and I am learning**
 
 ![HTML5](https://skillicons.dev/icons?i=html) ![CSS3](https://skillicons.dev/icons?i=css) ![JavaScript](https://skillicons.dev/icons?i=js) ![Tailwind CSS](https://skillicons.dev/icons?i=tailwind) ![React](https://skillicons.dev/icons?i=react) ![Node.js](https://skillicons.dev/icons?i=nodejs) ![Express](https://skillicons.dev/icons?i=express) ![MongoDB](https://skillicons.dev/icons?i=mongodb)
 
