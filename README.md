@@ -58,7 +58,6 @@ I'm a B.Tech Computer Science Engineering student at Medi-Caps University and an
 ```
 Current-portfolio/
 ├── index.html                  # The whole site: markup, styles and scripts
-├── netlify/
 │   └── functions/
 │       └── chat.js             # Optional serverless function for the AI assistant
 └── README.md
